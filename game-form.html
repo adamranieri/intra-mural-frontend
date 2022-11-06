@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form>
+
+        <fieldset>
+            <legend>Time and Location</legend>
+
+            <label>Venue</label>
+            <select >
+                <option value="Court 1">Court 1</option>
+                <option value="Court 2">Court 2</option>
+                <option value="Court 3">Court 3</option>
+            </select>
+    
+    
+            <label>Time</label>
+            <input type="datetime-local">
+    
+            <br/>
+        </fieldset>
+
+        <fieldset>
+            <legend>Sport and series</legend>
+
+            <label>Series</label>
+            <select>
+                <option value="regular season">Regular Season</option>
+                <option value="playoff">Playoff</option>
+                <option value="tournament">Tournament</option>
+            </select>
+    
+            <br/>
+            
+            <label>Sport</label>
+            <select oninput="filter(event)">
+                <option value="none"></option>
+                <option value="basketball">basketball</option>
+                <option value="softball">softball</option>
+    
+            </select>  
+
+        </fieldset>
+
+ 
+        <fieldset>
+            <legend>Teams</legend>
+
+            <label>Home Team</label>
+            <select id="homeOptions">
+
+            </select>
+    
+            <label>Away Team Team</label>
+            <select id="awayOptions">
+
+            </select>
+        </fieldset>
+
+
+        <button>Schedule</button>
+
+    </form>
+    
+</body>
+<script src="http-requests.js"></script>
+<script>
+    const basketballTeams = ["nets","heat"];
+    const softballTeams = ["marlins","giants"];
+    let teams = [];
+    let seasons = [];
+    let venues = [];
+
+
+    function filter(){
+        console.log(teams,seasons,venues);
+        const homeTeams = document.getElementById("homeOptions");
+        const awayTeams = document.getElementById("awayOptions");
+
+        function createOptionElements(teams){
+            homeTeams.replaceChildren();
+            awayTeams.replaceChildren();
+
+            for(const team of teams){
+                    const option = document.createElement("option");
+                    option.value = team;
+                    option.innerText = team;
+                    homeTeams.appendChild(option);
+            }
+
+            for(const team of teams){
+                    const option = document.createElement("option");
+                    option.value = team;
+                    option.innerText = team;
+                    awayTeams.appendChild(option);
+            }
+        }
+
+        switch(event.target.value){
+            case "basketball": createOptionElements(basketballTeams); break;
+            case "softball": createOptionElements(softballTeams); break;           
+
+        }
+    }
+
+    async function populateForm(){
+        teams = await retrieveAllTeams();
+        seasons = await retrieveAllSeasons();
+        venues = await retreiveAllVenues();
+
+    }
+
+    populateForm();
+</script>
+<script>
+
+</script>
+</html>
+

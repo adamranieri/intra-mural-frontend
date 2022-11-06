@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <label>Venue Availability</label>
+    <input type="date">
+    <button>Go To Date</button>
+
+    <table >
+        <thead>
+            <tr id="gameTableHead">
+                <th>time</th>
+            </tr>
+        </thead>
+        <tbody id="gameTableBody">
+            <tr><td>8:00 AM</td><td><button><a href="">Schedule</a></button></td><td><button><a href="">Schedule</a></button></td></tr>
+        </tbody>
+    </table>
+    
+</body>
+<script src="http-requests.js"></script>
+<script>
+    const dateSelector = document.getElementsByTagName("input")[0];
+    const goToDateBtn = document.getElementsByTagName("button")[0];
+
+    async function populateTableHeads(){
+        const venues = await retreiveAllVenues();
+        const gameTableHead = document.getElementById("gameTableHead");
+
+        for(const venue of venues){
+            const th = document.createElement("th");
+            th.innerText = venue.description;
+            gameTableHead.appendChild(th);
+        }
+    }
+
+    async function populateTableBody(){
+        const games = await retrieveAllGames();
+        console.log(games)
+
+        const tr = `<tr>
+                <td>8: 00 AM</td> <td>
+            </tr>`
+
+
+    }
+
+    populateTableHeads();
+    populateTableBody();
+</script>
+
+</html>
