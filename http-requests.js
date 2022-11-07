@@ -14,6 +14,8 @@ async function sendTeamRegistration(name, captain, teamStatus, sport){
     return result.status === 204;
 }
 
+async
+
 async function sendGame(game){
     const body = JSON.stringify(game);
     const result = await fetch(`${server}/games`,{method:"POST", body, headers:{"Content-type":"application/json"}});
@@ -43,4 +45,14 @@ async function retrieveAllGames(){
     const result = await fetch(`${server}/games`);
     const games = await result.json();
     return games;
+}
+
+async function retrieveRosterForTeam(teamName){
+    const result = await fetch(`${server}/teams/${teamName}/players`);
+    const players = await result.json();
+    return players;
+}
+
+async function retrieveGameStatsForUsers(players = [""]){
+    
 }

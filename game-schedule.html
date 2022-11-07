@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr><th>Date</th><th>Time EST</th><th>Venue</th><th>Home Team</th><th>Away Team</th><th>Outcome</th></tr>
+        </thead>
+        <tbody id="gameTableBody">
+
+        </tbody>
+    </table>
+
+    
+</body>
+<script src="http-requests.js"></script>
+<script>
+    async function populateTable(){
+        const games = await retrieveAllGames();
+        const gameTableBody = document.getElementById("gameTableBody")
+        
+        for(const game of games){
+            const {gameStart,venueTitle,homeTeam,awayTeam,outcome} = game;
+            const gameDate = new Date(gameStart*1000);
+            const tr = `<tr>
+                <td>${gameDate.toLocaleDateString()}</td>
+                <td>${gameDate.toLocaleTimeString()}</td>
+                <td>${venueTitle}</td><td>${homeTeam}</td>
+                <td>${awayTeam}</td><td>${outcome}</td>
+                <td><button>Scorecard</button>
+                </tr>`
+            gameTableBody.insertAdjacentHTML("afterend",tr);
+        }
+
+    }
+    populateTable()
+</script>
+</html>
+
