@@ -2,9 +2,9 @@ body {
     background-color: black;
     text-align: center;
     font-size: large;
+    color: white;
 }
 
 table {
     margin: auto;
-    color: white;
 }
