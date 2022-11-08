@@ -14,7 +14,7 @@ async function sendTeamRegistration(name, captain, teamStatus, sport){
     return result.status === 204;
 }
 
-async
+
 
 async function sendGame(game){
     const body = JSON.stringify(game);
