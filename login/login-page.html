@@ -32,8 +32,14 @@
         const password = formData.get("password");
        
         const user = await sendLogin(username,password);
-        console.log(user)
 
+        if (user.role === 'player') {
+            window.location.href = '../player-page/player-page.html';
+        } else if (user.role === 'admin') {
+            window.location.href = '../admin-page/admin-page.html';
+        } else if (user.role === 'referee') {
+            window.location.href = '../referee-page/referee-page.html';
+        }
     });
 </script>
 </html>

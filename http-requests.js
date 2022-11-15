@@ -3,7 +3,7 @@ const server = "http://localhost:7000";
 
 async function sendLogin(username, password){
     const body = JSON.stringify({username,password});
-    const result = await fetch(`${server}/login`,{method:"POST", body, headers:{"Content-type":"application/json"}});
+    const result = await fetch(`${server}/login`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials: 'include'});
     const responseBody = await result.json();
     return responseBody;
 }
@@ -13,8 +13,6 @@ async function sendTeamRegistration(name, captain, teamStatus, sport){
     const result = await fetch(`${server}/teams`,{method:"POST", body, headers:{"Content-type":"application/json"}});
     return result.status === 204;
 }
-
-
 
 async function sendGame(game){
     const body = JSON.stringify(game);

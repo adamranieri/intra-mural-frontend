@@ -1,5 +1,3 @@
-
-
 function gameTableRowHTML(game){
     const {gameStart,venueTitle,homeTeam,awayTeam,outcome} = game;
     const gameDate = new Date(gameStart*1000);
