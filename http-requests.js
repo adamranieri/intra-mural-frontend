@@ -5,7 +5,13 @@ async function sendLogin(username, password){
     const body = JSON.stringify({username,password});
     const result = await fetch(`${server}/login`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials: 'include'});
     const responseBody = await result.json();
+    
     return responseBody;
+}
+
+async function sendLogout() {
+    const result = await fetch(`${server}/logout`, {method:"POST", credentials:'include'});
+    return result;
 }
 
 async function sendTeamRegistration(name, captain, teamStatus, sport){

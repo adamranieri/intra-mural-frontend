@@ -32,13 +32,10 @@
         const password = formData.get("password");
        
         const user = await sendLogin(username,password);
+        localStorage.setItem('user', JSON.stringify(user));
 
-        if (user.role === 'player') {
-            window.location.href = '../player-page/player-page.html';
-        } else if (user.role === 'admin') {
-            window.location.href = '../admin-page/admin-page.html';
-        } else if (user.role === 'referee') {
-            window.location.href = '../referee-page/referee-page.html';
+        if (user.role === 'player' || user.role === 'referee' || user.role === 'admin') {
+            document.location.href = '../option-page/option-page.html';
         }
     });
 </script>
