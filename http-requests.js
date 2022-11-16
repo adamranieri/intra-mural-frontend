@@ -30,6 +30,27 @@ async function sendUserRegistration(username, password, heightInches, weightLbs,
     return responseBody;
 }
 
+async function retrieveAllUsers() {
+    const result = await fetch(`${server}/users`);
+    const users = await result.json();
+    return users;
+}
+
+async function demoteToPlayer(userId) {
+    const result = await fetch(`${server}/users/${userId}/role`, {method:"PATCH", body: JSON.stringify({role: "player"}), headers:{"Content-type":"application/json"}, credentials:"include"})
+    document.location.reload();
+}
+
+async function promoteToAdmin(userId) {
+    const result = await fetch(`${server}/users/${userId}/role`, {method:"PATCH", body: JSON.stringify({role: "admin"}), headers:{"Content-type":"application/json"}, credentials:"include"})
+    document.location.reload();
+}
+
+async function promoteToReferee(userId) {
+    const result = await fetch(`${server}/users/${userId}/role`, {method:"PATCH", body: JSON.stringify({role: "referee"}), headers:{"Content-type":"application/json"}, credentials:"include"})
+    document.location.reload();
+}
+
 async function sendTeamRegistration(name, captain, teamStatus, sport){
     const body = JSON.stringify({name,captain,teamStatus,sport});
     const result = await fetch(`${server}/teams`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});

@@ -20,6 +20,13 @@ function seasonTableRowHTML(season) {
     return `<tr><td>${title}</td></tr>`
 }
 
+function userTableRowHTML(user) {
+    const { userId, username, role } = user;
+    return `<tr><td>${userId}</td><td>${username}</td><td>${role}</td>
+        ${role === 'player' ? `<td><button onclick="promoteToAdmin(${userId})">Promote To Admin</button></td><td><button onclick="promoteToReferee(${userId})">Promote To Referee</button</td>` : `<td><button onclick="demoteToPlayer(${userId})">Demote To Player</button></td>`}
+        </tr>`
+}
+
 function optionHTML(title,value){
     return `<option value="${value}">${title}</option>`
 }
