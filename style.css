@@ -5,15 +5,11 @@ body {
     color: white;
 }
 
-table {
-    margin: auto;
-}
-
 a {
-    margin-top: 20px;
     display: inline-block;
+    margin: 20px;
+    padding: 50px;
     color: black;
-    background: white;
     text-decoration: none;
-    padding: 20px;
+    background: white;
 }
