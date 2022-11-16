@@ -1,17 +1,33 @@
 
-const server = "http://localhost:7000";
+const server = "http://127.0.0.1:7000";
 
 async function sendLogin(username, password){
     const body = JSON.stringify({username,password});
-    const result = await fetch(`${server}/login`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials: 'include'});
+    const result = await fetch(`${server}/login`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});
     const responseBody = await result.json();
     
     return responseBody;
 }
 
 async function sendLogout() {
-    const result = await fetch(`${server}/logout`, {method:"POST", credentials:'include'});
+    const result = await fetch(`${server}/logout`, {method:"POST", credentials:"include"});
     return result;
+}
+
+async function sendUserUpdate(username, password, heightInches, weightLbs, profilePic, hideBiometrics) {
+    const body = JSON.stringify({username, password, heightInches, weightLbs, profilePic, hideBiometrics});
+    const result = await fetch(`${server}/users`, {method:"PUT", body, credentials:"include"});
+    const responseBody = await result.json();
+
+    return responseBody;
+}
+
+async function sendUserRegistration(username, password, heightInches, weightLbs, profilePic, hideBiometrics) {
+    const body = JSON.stringify({username, password, heightInches, weightLbs, profilePic, hideBiometrics});
+    const result = await fetch(`${server}/users`, {method:"POST", body, credentials:"include"});
+    const responseBody = await result.json();
+
+    return responseBody;
 }
 
 async function sendTeamRegistration(name, captain, teamStatus, sport){
@@ -27,7 +43,7 @@ async function sendGame(game){
     return savedGame;
 }
 
-async function retreiveAllVenues(){
+async function retrieveAllVenues(){
     const result = await fetch(`${server}/venues`);
     const venues = await result.json();
     return venues;

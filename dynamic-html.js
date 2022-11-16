@@ -10,7 +10,19 @@ function gameTableRowHTML(game){
     </tr>`
 }
 
+function venueTableRowHTML(venue) {
+    const {title} = venue;
+    return `<tr><td>${title}</td></tr>`
+}
+
 function optionHTML(title,value){
     return `<option value="${value}">${title}</option>`
 }
 
+function changePasswordInputType() {
+    if (passwordInput.getAttribute("type") === "password") {
+        passwordInput.setAttribute("type", "text");
+    } else {
+        passwordInput.setAttribute("type", "password");
+    }
+}

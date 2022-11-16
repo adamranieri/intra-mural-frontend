@@ -12,10 +12,13 @@ bodyElement.innerHTML += `<h1>${userObj.role.charAt(0).toUpperCase() + userObj.r
 bodyElement.innerHTML += `<div><p>Welcome, ${userObj.username}!</p>${userObj.profilePic != 'none' ? `<img src="${userObj.profilePic}" />` : ''}</div>`;
 
 // Edit Profile
-bodyElement.innerHTML += `<a href="/user-profile/user-profile.html">User Profile</a>`
+bodyElement.innerHTML += `<a href="/user-profile/user-profile.html">Edit User Profile</a>`
 
 // Game Schedule Viewer
 bodyElement.innerHTML += `<a href="/game-schedule/game-schedule.html">Game Schedule</a>`;
+
+// Venue Viewer
+bodyElement.innerHTML += `<a href="/venue-view/venue-view.html">View Venues</a>`
 
 // Logout button
 const logoutButton = document.createElement('button');
