@@ -15,10 +15,29 @@ bodyElement.innerHTML += `<div><p>Welcome, ${userObj.username}!</p>${userObj.pro
 bodyElement.innerHTML += `<a href="/user-profile/user-profile.html">Edit User Profile</a>`
 
 // Game Schedule Viewer
-bodyElement.innerHTML += `<a href="/game-schedule/game-schedule.html">Game Schedule</a>`;
+bodyElement.innerHTML += `<a href="/game-schedule/game-schedule.html">Games</a>`;
 
 // Venue Viewer
 bodyElement.innerHTML += `<a href="/venue-view/venue-view.html">View Venues</a>`
+
+// Seasons Viewer
+bodyElement.innerHTML += `<a href="/season-view/season-view.html">View Seasons</a>`
+
+/*
+    Admin only links
+*/
+if (userObj.role === 'admin') {
+    bodyElement.innerHTML += `<a href="/add-season/add-season.html">Add Season</a>`
+    bodyElement.innerHTML += `<a href="/user-manager/user-manager.html">Manage User Roles</a>`;
+}
+
+if (userObj.role === 'player') {
+
+}
+
+if (userObj.role === 'referee') {
+
+}
 
 // Logout button
 const logoutButton = document.createElement('button');

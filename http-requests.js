@@ -24,23 +24,51 @@ async function sendUserUpdate(username, password, heightInches, weightLbs, profi
 
 async function sendUserRegistration(username, password, heightInches, weightLbs, profilePic, hideBiometrics) {
     const body = JSON.stringify({username, password, heightInches, weightLbs, profilePic, hideBiometrics});
-    const result = await fetch(`${server}/users`, {method:"POST", body, credentials:"include"});
+    const result = await fetch(`${server}/users`, {method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});
     const responseBody = await result.json();
 
     return responseBody;
 }
 
+async function retrieveAllUsers() {
+    const result = await fetch(`${server}/users`);
+    const users = await result.json();
+    return users;
+}
+
+async function demoteToPlayer(userId) {
+    const result = await fetch(`${server}/users/${userId}/role`, {method:"PATCH", body: JSON.stringify({role: "player"}), headers:{"Content-type":"application/json"}, credentials:"include"})
+    document.location.reload();
+}
+
+async function promoteToAdmin(userId) {
+    const result = await fetch(`${server}/users/${userId}/role`, {method:"PATCH", body: JSON.stringify({role: "admin"}), headers:{"Content-type":"application/json"}, credentials:"include"})
+    document.location.reload();
+}
+
+async function promoteToReferee(userId) {
+    const result = await fetch(`${server}/users/${userId}/role`, {method:"PATCH", body: JSON.stringify({role: "referee"}), headers:{"Content-type":"application/json"}, credentials:"include"})
+    document.location.reload();
+}
+
 async function sendTeamRegistration(name, captain, teamStatus, sport){
     const body = JSON.stringify({name,captain,teamStatus,sport});
-    const result = await fetch(`${server}/teams`,{method:"POST", body, headers:{"Content-type":"application/json"}});
+    const result = await fetch(`${server}/teams`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});
     return result.status === 204;
 }
 
 async function sendGame(game){
     const body = JSON.stringify(game);
-    const result = await fetch(`${server}/games`,{method:"POST", body, headers:{"Content-type":"application/json"}});
+    const result = await fetch(`${server}/games`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});
     const savedGame = await result.json();
     return savedGame;
+}
+
+async function sendSeason(title) {
+    const body = JSON.stringify({title});
+    const result = await fetch(`${server}/seasons`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"})
+    const savedSeason = await result.json();
+    return savedSeason
 }
 
 async function retrieveAllVenues(){
