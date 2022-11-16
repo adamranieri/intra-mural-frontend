@@ -15,6 +15,11 @@ function venueTableRowHTML(venue) {
     return `<tr><td>${title}</td></tr>`
 }
 
+function seasonTableRowHTML(season) {
+    const {title} = season;
+    return `<tr><td>${title}</td></tr>`
+}
+
 function optionHTML(title,value){
     return `<option value="${value}">${title}</option>`
 }
