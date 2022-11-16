@@ -132,17 +132,20 @@
         }
     }
 
-    document.addEventListener("submit", function(event){
+    document.addEventListener("submit", async function(event){
         event.preventDefault();
         const formData = new FormData(event.target);
-        const venue = formData.get("venue");
-        const time = formData.get("time");
-        const season = formData.get("season");
+        const venueTitle = formData.get("venue");
+        const date = formData.get("time");
+        const seasonTitle = formData.get("season");
         const sport = formData.get("sport");
-        const home = formData.get("home");
-        const away = formData.get("away");
-        console.log(venue,time,season,sport,home,away);
-        console.log(sport)
+        const homeTeam = formData.get("home");
+        const awayTeam = formData.get("away");
+
+        const gameStart = Math.floor(new Date(date).getTime() / 1000);
+        
+        let savedGame = await sendGame({venueTitle, seasonTitle, homeTeam, awayTeam, gameStart, outcome: "scheduled"});
+        console.log(savedGame);
     });
 
     populateForm();
