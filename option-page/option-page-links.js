@@ -29,6 +29,7 @@ bodyElement.innerHTML += `<a href="/season-view/season-view.html">View Seasons</
 if (userObj.role === 'admin') {
     bodyElement.innerHTML += `<a href="/add-season/add-season.html">Add Season</a>`
     bodyElement.innerHTML += `<a href="/user-manager/user-manager.html">Manage User Roles</a>`;
+    bodyElement.innerHTML += `<a href="/game-form/game-form.html">Schedule Game</a>`
 }
 
 if (userObj.role === 'player') {
