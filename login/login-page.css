@@ -5,6 +5,10 @@ body {
     color: white;
 }
 
+a {
+    color: white;
+}
+
 form {
     display: inline-block;
     text-align: left;
