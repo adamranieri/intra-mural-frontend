@@ -20,6 +20,34 @@ input {
     border-radius: 5px;
 }
 
+input:first-of-type{
+    margin-top: 7%;
+    margin-left: 12.7%;
+}
+
+input:nth-of-type(2) {
+    margin-top: 7%;
+    margin-left: 14%;
+}
+
+input:nth-of-type(3) {
+    margin-top: 7%;
+}
+
+input:nth-of-type(4) {
+    margin-top: 7%;
+    margin-left: 7.2%;
+}
+
+input:nth-of-type(5) {
+    margin-top: 7%;
+    margin-left: 2%;
+}
+
+input:nth-of-type(6) {
+    margin-top: 7%;
+}
+
 button {
     margin-top: 7%;
     margin-left: 40%;
