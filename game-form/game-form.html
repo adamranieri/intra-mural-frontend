@@ -82,7 +82,7 @@
     async function populateForm(){
         teams = await retrieveAllTeams();
         seasons = await retrieveAllSeasons();
-        venues = await retreiveAllVenues();
+        venues = await retrieveAllVenues();
         addOptions();
     }
 
@@ -141,7 +141,6 @@
         const away = formData.get("away");
         console.log(venue,time,season,sport,home,away);
         console.log(sport)
-
     });
 
     populateForm();

@@ -23,6 +23,21 @@ bodyElement.innerHTML += `<a href="/venue-view/venue-view.html">View Venues</a>`
 // Seasons Viewer
 bodyElement.innerHTML += `<a href="/season-view/season-view.html">View Seasons</a>`
 
+/*
+    Admin only links
+*/
+if (userObj.role === 'admin') {
+    bodyElement.innerHTML += `<a href="/add-season/add-season.html">Add Season</a>`
+}
+
+if (userObj.role === 'player') {
+
+}
+
+if (userObj.role === 'referee') {
+
+}
+
 // Logout button
 const logoutButton = document.createElement('button');
 logoutButton.innerHTML = 'Logout';
