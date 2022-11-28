@@ -23,6 +23,9 @@ bodyElement.innerHTML += `<a href="/venue-view/venue-view.html">View Venues</a>`
 // Seasons Viewer
 bodyElement.innerHTML += `<a href="/season-view/season-view.html">View Seasons</a>`
 
+// Referee and Game Viewer
+bodyElement.innerHTML += `<a href="/referee-game-view/referee-game-view.html">View Games and their referees`
+
 /*
     Admin only links
 */
