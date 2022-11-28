@@ -35,7 +35,7 @@
 
     // 2 functions pertaining to showing and removing Captain Information below
     // showCaptainInfo is linked to the onclick attribute of the "See The Captain" button
-    async function showCaptainInfo(id) {
+    async function showCaptainInfo(teamName, id) {
         let body = document.getElementsByTagName('body')[0];
 
         let stats = await retrieveStatsForPlayer(id);
@@ -46,10 +46,11 @@
         let captainInfoSection = (
             `<section>
                 <button onclick="removeCaptainInfo()">Close</button>
+                <h2>${teamName}'s Captain</h2>
                 <p>Player Id: ${stats.id}</p>
                 <p>Username: ${stats.username}</p>
-                ${stats.hideBiometrics === false ? `<p>Height (inches): ${stats.heightInches}</p> <p>Weight (lbs): ${stats.weightLbs}</p>` : ''}
-                ${stats.profilePic != 'none' ? `<img src="${stats.profilePic}" />` : ''}
+                ${stats.hideBiometrics === false ? `<p>Height (inches): ${stats.heightInches}</p> <p>Weight (lbs): ${stats.weightLbs}</p>` : '<p><strong>The Captain has chosen not to show biometric information</strong></p>'}
+                ${stats.profilePic != 'none' ? `<img src="${stats.profilePic}" />` : '<p><strong>The Captain has no profile picture</strong></p>'}
             </section>`
         );
 

@@ -36,7 +36,7 @@ function teamTableRowHTML(team) {
         <td>${team.name}</td>
         <td>${team.sport}</td>
         <td>${team.teamStatus}</td>
-        <td><button onclick="showCaptainInfo(${team.captain})">See The Captain</button></td>
+        <td><button onclick="showCaptainInfo('${team.name}', ${team.captain})">See The Captain</button></td>
     </tr>`);
 }
 

@@ -9,7 +9,7 @@ const bodyElement = document.getElementsByTagName('body')[0];
 bodyElement.innerHTML += `<h1>${userObj.role.charAt(0).toUpperCase() + userObj.role.substr(1).toLowerCase()} Page</h1>`;
 
 // Welcome Text
-bodyElement.innerHTML += `<div><p>Welcome, ${userObj.username}!</p>${userObj.profilePic != 'none' ? `<img src="${userObj.profilePic}" />` : ''}</div>`;
+bodyElement.innerHTML += `<div><p>Welcome, ${userObj.username}!</p>${userObj.profilePic != 'none' ? `<img src="${userObj.profilePic}" />` : '<p><strong>You have not set a profile picture!</strong></p>'}</div>`;
 
 // Edit Profile
 bodyElement.innerHTML += `<a href="/user-profile/user-profile.html">Edit User Profile</a>`
