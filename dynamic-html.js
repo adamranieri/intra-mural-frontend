@@ -6,7 +6,6 @@ function gameTableRowHTML(game){
         <td>${gameDate.toLocaleTimeString()}</td>
         <td>${venueTitle}</td><td>${homeTeam}</td>
         <td>${awayTeam}</td><td>${outcome}</td>
-        <td><button>Scorecard</button>
     </tr>`
 }
 
@@ -29,6 +28,16 @@ function userTableRowHTML(user) {
 
 function optionHTML(title,value){
     return `<option value="${value}">${title}</option>`
+}
+
+function teamTableRowHTML(team) {
+    return (
+    `<tr>
+        <td>${team.name}</td>
+        <td>${team.sport}</td>
+        <td>${team.teamStatus}</td>
+        <td><button onclick="showCaptainInfo(${team.captain})">See The Captain</button></td>
+    </tr>`);
 }
 
 function changePasswordInputType() {

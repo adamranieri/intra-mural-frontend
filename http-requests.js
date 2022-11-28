@@ -102,13 +102,13 @@ async function retrieveRosterForTeam(teamName){
 }
 
 async function retrieveStatsForPlayer(playerId = 0,sport =""){ // returns stats
-    const result = await fetch(`${server}/players/${playerId}/stats?sport=${sport}`)
+    const result = await fetch(`${server}/playercards/${playerId}`)
     const stats = await result.json();
     return stats;
 }
 
-async function retreiveGameStats(gameId = 0){ // returns stats
-    const result = await fetch(`${server}/stats?gameId=${gameId}`)
-    const stats = await result.json();
-    return stats; 
-}
+// async function retreiveGameStats(gameId = 0){ // returns stats
+//     const result = await fetch(`${server}/stats?gameId=${gameId}`)
+//     const stats = await result.json();
+//     return stats; 
+// }

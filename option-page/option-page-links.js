@@ -32,8 +32,11 @@ if (userObj.role === 'admin') {
     bodyElement.innerHTML += `<a href="/game-form/game-form.html">Schedule Game</a>`
 }
 
+/*
+    Player only links
+*/
 if (userObj.role === 'player') {
-
+    bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Management</a>`
 }
 
 if (userObj.role === 'referee') {
