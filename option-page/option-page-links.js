@@ -1,6 +1,7 @@
 const userObj = JSON.parse(localStorage.getItem('user'));
 
-const bodyElement = document.getElementsByTagName('body')[0];
+if (userObj) {
+    const bodyElement = document.getElementsByTagName('body')[0];
 
 /*
     Players, referees, and admins should all have the ability to 
@@ -51,6 +52,29 @@ logoutButton.addEventListener('click', async () => {
     if (response.status === 200) {
         document.location.href = '/index.html';
     }
-});
-
-bodyElement.appendChild(logoutButton);
+    
+    /*
+        Player only links
+    */
+    if (userObj.role === 'player') {
+        bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Applications</a>`
+    }
+    
+    if (userObj.role === 'referee') {
+    
+    }
+    
+    // Logout button
+    const logoutButton = document.createElement('button');
+    logoutButton.innerHTML = 'Logout';
+    logoutButton.addEventListener('click', async () => {
+        localStorage.removeItem('user');
+        response = await sendLogout();
+        if (response.status === 200) {
+            document.location.href = '/index.html';
+        }
+    });
+    
+    bodyElement.appendChild(logoutButton);
+    
+}
