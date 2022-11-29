@@ -30,14 +30,13 @@
         const formData = new FormData(event.target);
         
         const gameId = formData.get("gameId");
-
+        const userId = JSON.parse(localStorage.getItem('user')).userId;
         
-        
+        const user = await refereeApplyToOfficiate(gameId,userId);
 
         if(user) {
             alert("Application Successful!");
-            localStorage.setItem('user', JSON.stringify(user));
-            document.location.href = '/option-page/option-page.html';
+            window.location.reload();
         } else {
             alert("Registration Failed!");
         }
