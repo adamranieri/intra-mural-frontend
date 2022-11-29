@@ -40,7 +40,7 @@ if (userObj.role === 'admin') {
     Referee only links
 */
 if (userObj.role === 'referee') {
-    bodyElement.innerHTML += `<a href="/apply-to-game-to-officiate/apply-to-officiate.html">Apply to game to officiate</a>`
+    bodyElement.innerHTML += `<a href="/officiating-choice/officiating-choice.html">Edit Officiating Choice</a>`
 }
 
 /*

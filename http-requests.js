@@ -138,3 +138,9 @@ async function refereeApplyToOfficiate(gameId, userId){
     const result = await fetch(`${server}/game-requests/apply`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});
     return result.status === 204;
 }
+
+async function refereeRemoveOfficiate(gameId, userId){
+    const body = JSON.stringify({gameId, userId});
+    const result = await fetch(`${server}/game-requests/delete`,{method:"DELETE", body, headers:{"Content-type":"application/json"}, credentials:"include"});
+    return result.status === 204;
+}
