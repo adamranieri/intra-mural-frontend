@@ -63,15 +63,15 @@
             }
 
             if (teamRequestMap[key].teamRequestStatus === 'accepted') {
-                let newNode = document.createElement('div');
-                newNode.innerHTML = `<p><strong>You cannot apply for another team since you are part of team "${teamRequestMap[key].teamName}"</strong></p>`;
+                let applicationMessage = document.createElement('div');
+                applicationMessage.innerHTML = `<p><strong>You cannot apply for another team since you are part of team "${teamRequestMap[key].teamName}"</strong></p>`;
                 let tableElement = document.getElementsByTagName('table')[0];
-                tableElement.parentNode.insertBefore(newNode, tableElement.nextSibling);
+                tableElement.parentNode.insertBefore(applicationMessage, tableElement.nextSibling);
                 return;
             }
         }
 
-        let newNode = document.createElement('div');
+        let applicationMessage = document.createElement('div');
         let tableElement = document.getElementsByTagName('table')[0];
         if (!thereIsPendingTeamRequest) {
             teams = await retrieveAllTeams();
@@ -80,15 +80,15 @@
             if (teams.length > 0) {
                 let options = teamApplyOptions(teams);
 
-                newNode.innerHTML = options;
+                applicationMessage.innerHTML = options;
             } else {
-                newNode.innerHTML = '<p><strong>There are no teams you can apply for!</strong></p>';
+                applicationMessage.innerHTML = '<p><strong>There are no teams you can apply for!</strong></p>';
             }
 
         } else {
-            newNode.innerHTML = '<p><strong>You cannot apply for another team if a request is pending</strong></p>'
+            applicationMessage.innerHTML = '<p><strong>You cannot apply for another team if a request is pending</strong></p>'
         }
-        tableElement.parentNode.insertBefore(newNode, tableElement.nextSibling);
+        tableElement.parentNode.insertBefore(applicationMessage, tableElement.nextSibling);
     }
     
     displayApplyMenu();
