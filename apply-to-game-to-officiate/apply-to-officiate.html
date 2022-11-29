@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="apply-to-officiate.css">
+    <title>Apply to Officiate</title>
+</head>
+<body>
+    <h1>Apply to Officiate a Game</h1>
+
+    <form>
+        <label>Game ID</label>
+        <input name="gameId" type="number">
+        <br>
+
+        <button>Submit</button>
+    </form>
+    <br>
+    
+    <a href="/option-page/option-page.html">Back</a>
+
+</body>
+<script src="/http-requests.js"></script>
+<script src="/dynamic-html.js"></script>
+<script>
+    document.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        
+        const gameId = formData.get("gameId");
+        const userId = JSON.parse(localStorage.getItem('user')).userId;
+        
+        const user = await refereeApplyToOfficiate(gameId,userId);
+
+        if(user) {
+            alert("Application Successful!");
+            window.location.reload();
+        } else {
+            alert("Registration Failed!");
+        }
+    });
+</script>
+</html>
