@@ -40,7 +40,7 @@ if (userObj.role === 'player') {
 }
 
 if (userObj.role === 'referee') {
-
+    bodyElement.innerHTML += `<a href="/apply-to-game-to-officiate/apply-to-officiate.html">Apply to game to officiate</a>`
 }
 
 // Logout button
