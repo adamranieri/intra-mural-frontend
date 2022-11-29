@@ -36,45 +36,31 @@ if (userObj.role === 'admin') {
     bodyElement.innerHTML += `<a href="/game-form/game-form.html">Schedule Game</a>`
 }
 
-if (userObj.role === 'player') {
-
-}
-
+/*
+    Referee only links
+*/
 if (userObj.role === 'referee') {
     bodyElement.innerHTML += `<a href="/apply-to-game-to-officiate/apply-to-officiate.html">Apply to game to officiate</a>`
 }
+
+/*
+    Player only links
+*/
+if (userObj.role === 'player') {
+    bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Applications</a>`
+}
+
 
 // Logout button
 const logoutButton = document.createElement('button');
 logoutButton.innerHTML = 'Logout';
 logoutButton.addEventListener('click', async () => {
+    localStorage.removeItem('user');
     response = await sendLogout();
     if (response.status === 200) {
         document.location.href = '/index.html';
     }
-    
-    /*
-        Player only links
-    */
-    if (userObj.role === 'player') {
-        bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Applications</a>`
-    }
-    
-    if (userObj.role === 'referee') {
-    
-    }
-    
-    // Logout button
-    const logoutButton = document.createElement('button');
-    logoutButton.innerHTML = 'Logout';
-    logoutButton.addEventListener('click', async () => {
-        localStorage.removeItem('user');
-        response = await sendLogout();
-        if (response.status === 200) {
-            document.location.href = '/index.html';
-        }
-    });
-    
-    bodyElement.appendChild(logoutButton);
-    
-}
+});
+
+bodyElement.appendChild(logoutButton);
+} 
