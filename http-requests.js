@@ -31,7 +31,7 @@ async function sendUserRegistration(username, password, heightInches, weightLbs,
 }
 
 async function retrieveAllUsers() {
-    const result = await fetch(`${server}/users`);
+    const result = await fetch(`${server}/users`, { credentials:"include" });
     const users = await result.json();
     return users;
 }
@@ -72,43 +72,50 @@ async function sendSeason(title) {
 }
 
 async function retrieveAllVenues(){
-    const result = await fetch(`${server}/venues`);
+    const result = await fetch(`${server}/venues`, { credentials:"include" });
     const venues = await result.json();
     return venues;
 }
 
 async function retrieveAllTeams(){
-    const result = await fetch(`${server}/teams`);
+    const result = await fetch(`${server}/teams`, { credentials:"include" });
     const teams = await result.json();
     return teams;
 }
 
 async function retrieveAllSeasons(){
-    const result = await fetch(`${server}/seasons`);
+    const result = await fetch(`${server}/seasons`, { credentials:"include" });
     const seasons = await result.json();
     return seasons;
 }
 
 async function retrieveAllGames(){
-    const result = await fetch(`${server}/games`);
+    const result = await fetch(`${server}/games`, { credentials:"include" });
     const games = await result.json();
     return games;
 }
 
 async function retrieveRosterForTeam(teamName){
-    const result = await fetch(`${server}/teams/${teamName}/players`);
+    const result = await fetch(`${server}/teams/${teamName}/players`, { credentials:"include" });
     const players = await result.json();
     return players;
 }
 
 async function retrieveStatsForPlayer(playerId = 0,sport =""){ // returns stats
-    const result = await fetch(`${server}/players/${playerId}/stats?sport=${sport}`)
+    const result = await fetch(`${server}/playercards/${playerId}`, { credentials:"include" })
     const stats = await result.json();
     return stats;
 }
 
-async function retreiveGameStats(gameId = 0){ // returns stats
-    const result = await fetch(`${server}/stats?gameId=${gameId}`)
-    const stats = await result.json();
-    return stats; 
+async function retrieveTeamRequestsForPlayer(playerId) {
+    const result = await fetch(`${server}/teamrequests?userId=${playerId}`, { credentials:"include" })
+    const teamRequests = await result.json();
+    return teamRequests;
+}
+
+async function addTeamRequestForPlayer(teamName, playerId) {
+    let body = JSON.stringify({ requesterId: playerId, teamName});
+    const result = await fetch(`${server}/teamrequests`, { method: "POST", body, headers:{"Content-type":"application/json"}, credentials:"include" });
+    const addedTeamRequest = await result.json();
+    return addedTeamRequest;
 }

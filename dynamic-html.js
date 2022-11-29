@@ -6,7 +6,6 @@ function gameTableRowHTML(game){
         <td>${gameDate.toLocaleTimeString()}</td>
         <td>${venueTitle}</td><td>${homeTeam}</td>
         <td>${awayTeam}</td><td>${outcome}</td>
-        <td><button>Scorecard</button>
     </tr>`
 }
 
@@ -29,6 +28,66 @@ function userTableRowHTML(user) {
 
 function optionHTML(title,value){
     return `<option value="${value}">${title}</option>`
+}
+
+function teamTableRowHTML(team) {
+    return (
+    `<tr>
+        <td>${team.name}</td>
+        <td>${team.sport}</td>
+        <td>${team.teamStatus}</td>
+        <td>${team.applicationStatus}</td>
+        <td><button onclick="showCaptainInfo('${team.name}', ${team.captain})">See The Captain</button></td>
+    </tr>`);
+}
+
+async function showCaptainInfo(teamName, id) {
+    let body = document.getElementsByTagName('body')[0];
+
+    let stats = await retrieveStatsForPlayer(id);
+    console.log(stats);
+
+    removeCaptainInfo();
+
+    let captainInfoSection = (
+        `<section>
+            <button onclick="removeCaptainInfo()">Close</button>
+            <h2>${teamName}'s Captain</h2>
+            <p>Player Id: ${stats.id}</p>
+            <p>Username: ${stats.username}</p>
+            ${stats.hideBiometrics === false ? `<p>Height (inches): ${stats.heightInches}</p> <p>Weight (lbs): ${stats.weightLbs}</p>` : '<p><strong>The Captain has chosen not to show biometric information</strong></p>'}
+            ${stats.profilePic != 'none' ? `<img src="${stats.profilePic}" />` : '<p><strong>The Captain has no profile picture</strong></p>'}
+        </section>`
+    );
+
+    body.innerHTML += captainInfoSection;
+}
+
+function teamApplyOptions(teams) {
+    let applyMenu = `
+            <select>
+                ${(function() {
+                    let result = "";
+                    for (team of teams) {
+                        result += optionHTML(team.name, team.name);
+                    }
+                    return result;
+                })()}
+            </select>
+            <button onclick=applyForTeam(document.getElementsByTagName('select')[0].value)>Apply</button>
+        `;
+    
+    return applyMenu;
+}
+
+function removeCaptainInfo() {
+    if (document.getElementsByTagName('section').length > 0) {
+        let captainInfo = document.getElementsByTagName('section')[0];
+
+        if (captainInfo) {
+            captainInfo.parentNode.removeChild(captainInfo);
+        }
+    }
 }
 
 function changePasswordInputType() {
