@@ -21,10 +21,10 @@ function seasonTableRowHTML(season) {
 }
 
 function gamesAndRefereeTableRowHTML(gamesAndReferee) {
-    const {gameRequestId,gameId,userId} = gamesAndReferee;
+    const {gameRequestId,gameId,userId,venue,season} = gamesAndReferee;
     return`<tr>
         <td>${gameRequestId}</td><td>${gameId}</td>
-        <td>${userId}</td>
+        <td>${userId}</td><td>${venue}</td><td>${season}</td>
     </tr>`
 }
 

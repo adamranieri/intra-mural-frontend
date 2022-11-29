@@ -8,8 +8,39 @@
     <title>Apply to Officiate</title>
 </head>
 <body>
+    <h1>Apply to Officiate a Game</h1>
+
+    <form>
+        <label>Game ID</label>
+        <input name="gameId" type="number">
+        <br>
+
+        <button>Submit</button>
+    </form>
+    <br>
+    
     <a href="/option-page/option-page.html">Back</a>
+
 </body>
 <script src="/http-requests.js"></script>
 <script src="/dynamic-html.js"></script>
+<script>
+    document.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        
+        const gameId = formData.get("gameId");
+        const userId = localStorage.userId;
+
+        const user = await refereeApplyToOfficiate(gameId,userId);
+
+        if(user) {
+            alert("Application Successful!");
+            localStorage.setItem('user', JSON.stringify(user));
+            document.location.href = '/option-page/option-page.html';
+        } else {
+            alert("Registration Failed!");
+        }
+    });
+</script>
 </html>
