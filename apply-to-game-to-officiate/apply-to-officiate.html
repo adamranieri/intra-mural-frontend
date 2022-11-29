@@ -30,9 +30,9 @@
         const formData = new FormData(event.target);
         
         const gameId = formData.get("gameId");
-        const userId = localStorage.userId;
 
-        const user = await refereeApplyToOfficiate(gameId,userId);
+        
+        
 
         if(user) {
             alert("Application Successful!");
