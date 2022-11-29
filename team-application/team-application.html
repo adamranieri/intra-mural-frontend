@@ -24,12 +24,14 @@
 </body>
 <script src="../http-requests.js"></script>
 <script src="../dynamic-html.js"></script>
+<script src="../team-checkers.js"></script>
 <script>
     async function populateTable() {
         let teamRequests = await retrieveTeamRequestsForPlayer(JSON.parse(localStorage.getItem('user')).userId);
-        let teamRequestTeamNames = {}
+
+        let teamRequestMap = {}
         for (teamRequest of teamRequests) {
-            teamRequestTeamNames[teamRequest.teamName] = { teamName: teamRequest.teamName, teamRequestStatus: teamRequest.teamRequestStatus };
+            teamRequestMap[teamRequest.teamName] = { teamRequestStatus: teamRequest.teamRequestStatus };
         }
 
         teams = await retrieveAllTeams();
@@ -37,11 +39,12 @@
         let tbody = document.getElementById('teamInfo');
 
         for (team of teams) {
-            if (team.name in teamRequestTeamNames) {
-                team.applicationStatus = teamRequestTeamNames[team.name].teamRequestStatus
+            if (team.name in teamRequestMap) {
+                team.applicationStatus = teamRequestMap[team.name].teamRequestStatus
             } else {
                 team.applicationStatus = 'not applied';
             }
+            
             tbody.innerHTML += teamTableRowHTML(team);
         }
     }
@@ -50,32 +53,16 @@
 </script>
 <script>
     async function displayApplyMenu() {
-        let teamRequests = await retrieveTeamRequestsForPlayer(JSON.parse(localStorage.getItem('user')).userId);
-        let teamRequestMap = {}
-        for (teamRequest of teamRequests) {
-            teamRequestMap[teamRequest.teamName] = { teamName: teamRequest.teamName, teamRequestStatus: teamRequest.teamRequestStatus };
-        }
-
-        let thereIsPendingTeamRequest = false;
-        for (key in teamRequestMap) {
-            if (teamRequestMap[key].teamRequestStatus === 'pending') {
-                thereIsPendingTeamRequest = true;
-            }
-
-            if (teamRequestMap[key].teamRequestStatus === 'accepted') {
-                let applicationMessage = document.createElement('div');
-                applicationMessage.innerHTML = `<p><strong>You cannot apply for another team since you are part of team "${teamRequestMap[key].teamName}"</strong></p>`;
-                let tableElement = document.getElementsByTagName('table')[0];
-                tableElement.parentNode.insertBefore(applicationMessage, tableElement.nextSibling);
-                return;
-            }
-        }
-
         let applicationMessage = document.createElement('div');
         let tableElement = document.getElementsByTagName('table')[0];
-        if (!thereIsPendingTeamRequest) {
-            teams = await retrieveAllTeams();
-            teams = teams.filter(team => { return !(team.name in teamRequestMap) });
+
+        if ((await getTeamOfPlayer(JSON.parse(localStorage.getItem('user')).userId)).name) {
+            applicationMessage.innerHTML = `<p><strong>You cannot apply for another team since you are part of team "${(await getTeamOfPlayer(JSON.parse(localStorage.getItem('user')).userId)).name}"</strong></p>`;
+        }
+        else if (await playerHasPendingTeamRequest(JSON.parse(localStorage.getItem('user')).userId)) {
+            applicationMessage.innerHTML = '<p><strong>You cannot apply for another team if a request is pending</strong></p>'
+        } else {
+            teams = await getUnappliedTeamsOfPlayer(JSON.parse(localStorage.getItem('user')).userId)
 
             if (teams.length > 0) {
                 let options = teamApplyOptions(teams);
@@ -84,10 +71,8 @@
             } else {
                 applicationMessage.innerHTML = '<p><strong>There are no teams you can apply for!</strong></p>';
             }
-
-        } else {
-            applicationMessage.innerHTML = '<p><strong>You cannot apply for another team if a request is pending</strong></p>'
         }
+
         tableElement.parentNode.insertBefore(applicationMessage, tableElement.nextSibling);
     }
     

@@ -37,7 +37,7 @@ if (userObj) {
         Player only links
     */
     if (userObj.role === 'player') {
-        bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Management</a>`
+        bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Applications</a>`
     }
     
     if (userObj.role === 'referee') {
