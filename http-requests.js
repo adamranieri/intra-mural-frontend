@@ -113,8 +113,9 @@ async function retrieveTeamRequestsForPlayer(playerId) {
     return teamRequests;
 }
 
-// async function retreiveGameStats(gameId = 0){ // returns stats
-//     const result = await fetch(`${server}/stats?gameId=${gameId}`)
-//     const stats = await result.json();
-//     return stats; 
-// }
+async function addTeamRequestForPlayer(teamName, playerId) {
+    let body = JSON.stringify({ requesterId: playerId, teamName});
+    const result = await fetch(`${server}/teamrequests`, { method: "POST", body, headers:{"Content-type":"application/json"}, credentials:"include" });
+    const addedTeamRequest = await result.json();
+    return addedTeamRequest;
+}

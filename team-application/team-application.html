@@ -61,24 +61,46 @@
             if (teamRequestMap[key].teamRequestStatus === 'pending') {
                 thereIsPendingTeamRequest = true;
             }
+
+            if (teamRequestMap[key].teamRequestStatus === 'accepted') {
+                let newNode = document.createElement('div');
+                newNode.innerHTML = `<p><strong>You cannot apply for another team since you are part of team "${teamRequestMap[key].teamName}"</strong></p>`;
+                let tableElement = document.getElementsByTagName('table')[0];
+                tableElement.parentNode.insertBefore(newNode, tableElement.nextSibling);
+                return;
+            }
         }
 
+        let newNode = document.createElement('div');
+        let tableElement = document.getElementsByTagName('table')[0];
         if (!thereIsPendingTeamRequest) {
             teams = await retrieveAllTeams();
             teams = teams.filter(team => { return !(team.name in teamRequestMap) });
-            let options = teamApplyOptions(teams);
 
-            let newNode = document.createElement('div');
-            newNode.innerHTML = options;
-            let tableElement = document.getElementsByTagName('table')[0];
-            tableElement.parentNode.insertBefore(newNode, tableElement.nextSibling);
+            if (teams.length > 0) {
+                let options = teamApplyOptions(teams);
+
+                newNode.innerHTML = options;
+            } else {
+                newNode.innerHTML = '<p><strong>There are no teams you can apply for!</strong></p>';
+            }
+
+        } else {
+            newNode.innerHTML = '<p><strong>You cannot apply for another team if a request is pending</strong></p>'
         }
+        tableElement.parentNode.insertBefore(newNode, tableElement.nextSibling);
     }
     
     displayApplyMenu();
+</script>
+<script>
+    async function applyForTeam(teamName) {
+        let addedTeamRequest = await addTeamRequestForPlayer(teamName, JSON.parse(localStorage.getItem('user')).userId);
 
-    function applyForTeam(x) {
-        console.log(x);
+        if (addedTeamRequest) {
+            alert('Team Application Successful');
+            window.location.reload();
+        }
     }
 </script>
 </html>
