@@ -20,6 +20,14 @@ function seasonTableRowHTML(season) {
     return `<tr><td>${title}</td></tr>`
 }
 
+function gamesAndRefereeTableRowHTML(gamesAndReferee) {
+    const {gameRequestId,gameId,userId} = gamesAndReferee;
+    return`<tr>
+        <td>${gameRequestId}</td><td>${gameId}</td>
+        <td>${userId}</td>
+    </tr>`
+}
+
 function userTableRowHTML(user) {
     const { userId, username, role } = user;
     return `<tr><td>${userId}</td><td>${username}</td><td>${role}</td>

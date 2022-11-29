@@ -112,3 +112,9 @@ async function retreiveGameStats(gameId = 0){ // returns stats
     const stats = await result.json();
     return stats; 
 }
+
+async function retrieveAllGamesAndReferees(){
+    const result = await fetch(`${server}/referee-and-games-lookup`);
+    const gamesAndReferees = await result.json();
+    return gamesAndReferees;
+}
