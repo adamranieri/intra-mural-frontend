@@ -14,6 +14,7 @@
             <th>Name</th>
             <th>Sport</th>
             <th>Team Status</th>
+            <th>Application Status</th>
         </thead>
         <tbody id="teamInfo">
         </tbody>
@@ -25,48 +26,59 @@
 <script src="../dynamic-html.js"></script>
 <script>
     async function populateTable() {
+        let teamRequests = await retrieveTeamRequestsForPlayer(JSON.parse(localStorage.getItem('user')).userId);
+        let teamRequestTeamNames = {}
+        for (teamRequest of teamRequests) {
+            teamRequestTeamNames[teamRequest.teamName] = { teamName: teamRequest.teamName, teamRequestStatus: teamRequest.teamRequestStatus };
+        }
+
         teams = await retrieveAllTeams();
+
         let tbody = document.getElementById('teamInfo');
 
         for (team of teams) {
+            if (team.name in teamRequestTeamNames) {
+                team.applicationStatus = teamRequestTeamNames[team.name].teamRequestStatus
+            } else {
+                team.applicationStatus = 'not applied';
+            }
             tbody.innerHTML += teamTableRowHTML(team);
         }
     }
 
-    // 2 functions pertaining to showing and removing Captain Information below
-    // showCaptainInfo is linked to the onclick attribute of the "See The Captain" button
-    async function showCaptainInfo(teamName, id) {
-        let body = document.getElementsByTagName('body')[0];
+    populateTable();
+</script>
+<script>
+    async function displayApplyMenu() {
+        let teamRequests = await retrieveTeamRequestsForPlayer(JSON.parse(localStorage.getItem('user')).userId);
+        let teamRequestMap = {}
+        for (teamRequest of teamRequests) {
+            teamRequestMap[teamRequest.teamName] = { teamName: teamRequest.teamName, teamRequestStatus: teamRequest.teamRequestStatus };
+        }
 
-        let stats = await retrieveStatsForPlayer(id);
-        console.log(stats);
-
-        removeCaptainInfo();
-
-        let captainInfoSection = (
-            `<section>
-                <button onclick="removeCaptainInfo()">Close</button>
-                <h2>${teamName}'s Captain</h2>
-                <p>Player Id: ${stats.id}</p>
-                <p>Username: ${stats.username}</p>
-                ${stats.hideBiometrics === false ? `<p>Height (inches): ${stats.heightInches}</p> <p>Weight (lbs): ${stats.weightLbs}</p>` : '<p><strong>The Captain has chosen not to show biometric information</strong></p>'}
-                ${stats.profilePic != 'none' ? `<img src="${stats.profilePic}" />` : '<p><strong>The Captain has no profile picture</strong></p>'}
-            </section>`
-        );
-
-        body.innerHTML += captainInfoSection;
-    }
-
-    function removeCaptainInfo() {
-        if (document.getElementsByTagName('section').length > 0) {
-            let captainInfo = document.getElementsByTagName('section')[0];
-
-            if (captainInfo) {
-                captainInfo.parentNode.removeChild(captainInfo);
+        let thereIsPendingTeamRequest = false;
+        for (key in teamRequestMap) {
+            if (teamRequestMap[key].teamRequestStatus === 'pending') {
+                thereIsPendingTeamRequest = true;
             }
         }
-    }
 
-    populateTable();
+        if (!thereIsPendingTeamRequest) {
+            teams = await retrieveAllTeams();
+            teams = teams.filter(team => { return !(team.name in teamRequestMap) });
+            let options = teamApplyOptions(teams);
+
+            let newNode = document.createElement('div');
+            newNode.innerHTML = options;
+            let tableElement = document.getElementsByTagName('table')[0];
+            tableElement.parentNode.insertBefore(newNode, tableElement.nextSibling);
+        }
+    }
+    
+    displayApplyMenu();
+
+    function applyForTeam(x) {
+        console.log(x);
+    }
 </script>
 </html>
