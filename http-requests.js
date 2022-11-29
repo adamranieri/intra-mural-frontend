@@ -83,6 +83,12 @@ async function retrieveAllTeams(){
     return teams;
 }
 
+async function retrieveTeamByTeamName(teamName) {
+    const result = await fetch(`${server}/teams/${teamName}`, { credentials:"include" });
+    const team = await result.json();
+    return team;
+}
+
 async function retrieveAllSeasons(){
     const result = await fetch(`${server}/seasons`, { credentials:"include" });
     const seasons = await result.json();

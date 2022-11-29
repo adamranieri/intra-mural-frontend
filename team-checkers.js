@@ -36,7 +36,7 @@ async function getTeamOfPlayer(playerId) {
 
     for (key in teamRequestMap) {
         if (teamRequestMap[key].teamRequestStatus === 'accepted') {
-            return key;
+            return await retrieveTeamByTeamName(key);
         }
     }
 
