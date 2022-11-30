@@ -18,6 +18,9 @@ const userObj = JSON.parse(localStorage.getItem('user'));
         
         // Game Schedule Viewer
         bodyElement.innerHTML += `<a href="/game-schedule/game-schedule.html">Games</a>`;
+
+        // Referee Game View
+        bodyElement.innerHTML += `<a href="/referee-game-view/referee-game-view.html">View Games and their referees</a>`
         
         // Venue Viewer
         bodyElement.innerHTML += `<a href="/venue-view/venue-view.html">View Venues</a>`
@@ -54,7 +57,7 @@ const userObj = JSON.parse(localStorage.getItem('user'));
         }
         
         if (userObj.role === 'referee') {
-        
+            bodyElement.innerHTML += `<a href="/officiating-choice/officiating-choice.html">Edit Officiating Choice</a>`
         }
         
         // Logout button
