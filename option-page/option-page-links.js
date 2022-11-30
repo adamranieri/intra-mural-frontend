@@ -51,6 +51,9 @@ const userObj = JSON.parse(localStorage.getItem('user'));
                     bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Applications</a>`;
                 } else {
                     bodyElement.innerHTML += `<a href="/team-request-approvedeny/team-request-approvedeny.html">Approve/Deny Team Requests</a>`;
+                    let captainMessage = document.createElement('h2');
+                    captainMessage.innerHTML = `Team Captain of "${teamOfUser.name}"!`;
+                    document.getElementsByTagName('h1')[0].insertAdjacentElement('afterend', captainMessage);
                 }
 
                 bodyElement.innerHTML += `<a href="/team-viewer/team-viewer.html">View Your Team</a>`

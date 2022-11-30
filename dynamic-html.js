@@ -71,10 +71,10 @@ async function showCaptainInfo(teamName, id) {
 }
 
 function teamMemberTableRowHTML(team, member) {
-    return `<tr><td>${member.userId}</td><td>${member.username}</td><td>${team.captain === member.userId ? 'Captain' : 'Player'}</td><td><button onclick="${team.captain === member.userId ? `showCaptainInfo('${team.name}', ${member.userId})` : `showPlayerInfo('${team.name}', ${member.userId})`}">See The Player</button></td></tr>`
+    return `<tr><td>${member.userId}</td><td>${member.username}</td><td>${team.captain === member.userId ? 'Captain' : 'Player'}</td><td><button onclick="${team.captain === member.userId ? `showCaptainInfo('${team.name}', ${member.userId})` : `showPlayerInfo(${member.userId})`}">See The Player</button></td></tr>`
 }
 
-async function showPlayerInfo(teamName, id) {
+async function showPlayerInfo(id) {
     let body = document.getElementsByTagName('body')[0];
 
     let stats = await retrieveStatsForPlayer(id);
@@ -84,7 +84,6 @@ async function showPlayerInfo(teamName, id) {
     let playerInfoSection = (
         `<section>
             <button onclick="removePlayerOrCaptainInfo()">Close</button>
-            <h2>${teamName}'s Member</h2>
             <p>Player Id: ${stats.id}</p>
             <p>Username: ${stats.username}</p>
             ${stats.hideBiometrics === false ? `<p>Height (inches): ${stats.heightInches}</p> <p>Weight (lbs): ${stats.weightLbs}</p>` : '<p><strong>Player has chosen not to show biometric information</strong></p>'}
@@ -132,5 +131,5 @@ function changePasswordInputType() {
 
 function teamRequestTableRowHTML(teamRequest) {
     console.log(teamRequest);
-    return `<tr><td>${teamRequest.teamRequestId}</td><td>${teamRequest.requesterId}</td><td>${teamRequest.teamRequestStatus}</td>${teamRequest.teamRequestStatus === 'pending' ? `<td><button onclick="approveTeamRequest(${teamRequest.teamRequestId})">Approve</button></td><td><button onclick="denyTeamRequest(${teamRequest.teamRequestId})">Deny</button></td><td><button onclick="showPlayerInfo('${teamRequest.teamName}', ${teamRequest.requesterId})">See The Player</button></td>` : `<td><button onclick="showPlayerInfo('${teamRequest.teamName}', ${teamRequest.requesterId})">See The Player</button></td>`}</tr>`
+    return `<tr><td>${teamRequest.teamRequestId}</td><td>${teamRequest.requesterId}</td><td>${teamRequest.teamRequestStatus}</td>${teamRequest.teamRequestStatus === 'pending' ? `<td><button onclick="approveTeamRequest(${teamRequest.teamRequestId})">Approve</button></td><td><button onclick="denyTeamRequest(${teamRequest.teamRequestId})">Deny</button></td><td><button onclick="showPlayerInfo(${teamRequest.requesterId})">See The Player</button></td>` : `<td><button onclick="showPlayerInfo(${teamRequest.requesterId})">See The Player</button></td>`}</tr>`
 }
