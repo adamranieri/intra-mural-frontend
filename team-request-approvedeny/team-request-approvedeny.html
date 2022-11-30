@@ -39,11 +39,17 @@
 </script>
 <script>
     async function approveTeamRequest(id) {
-        console.log(id);
+        if (await sendApproveTeamRequest(id)) {
+            alert("Approve successful");
+            window.location.reload();
+        }
     }
 
     async function denyTeamRequest(id) {
-        console.log(id);
+        if (await sendDenyTeamRequest(id)) {
+            alert("Deny successful");
+            window.location.reload();
+        }
     }
 </script>
 </html>

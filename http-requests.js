@@ -159,12 +159,10 @@ async function refereeRemoveOfficiate(gameId, userId){
 
 async function sendApproveTeamRequest(requestId){
     const result = await fetch(`${server}/teamrequests/${requestId}/approve`,{method:"PATCH", headers:{"Content-type":"application/json"}, credentials:"include"});
-    const responseBody = await result.json();
-    return responseBody;
+    return result.status === 200;
 }
 
 async function sendDenyTeamRequest(requestId){
     const result = await fetch(`${server}/teamrequests/${requestId}/deny`,{method:"PATCH", headers:{"Content-type":"application/json"}, credentials:"include"});
-    const responseBody = await result.json();
-    return responseBody;
+    return result.status === 200;
 }
