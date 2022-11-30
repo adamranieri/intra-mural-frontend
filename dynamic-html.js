@@ -131,5 +131,6 @@ function changePasswordInputType() {
 }
 
 function teamRequestTableRowHTML(teamRequest) {
-    return `<tr><td>${teamRequest.teamRequestId}</td><td>${teamRequest.requesterId}</td><td>${teamRequest.teamRequestStatus}</td>${teamRequest.teamRequestStatus === 'pending' ? `<td><button onclick="approveTeamRequest(${teamRequest.teamRequestId})">Approve</button></td><td><button onclick="denyTeamRequest(${teamRequest.teamRequestId})">Deny</button></td>` : ''}</tr>`
+    console.log(teamRequest);
+    return `<tr><td>${teamRequest.teamRequestId}</td><td>${teamRequest.requesterId}</td><td>${teamRequest.teamRequestStatus}</td>${teamRequest.teamRequestStatus === 'pending' ? `<td><button onclick="approveTeamRequest(${teamRequest.teamRequestId})">Approve</button></td><td><button onclick="denyTeamRequest(${teamRequest.teamRequestId})">Deny</button></td><td><button onclick="showPlayerInfo('${teamRequest.teamName}', ${teamRequest.requesterId})">See The Player</button></td>` : `<td><button onclick="showPlayerInfo('${teamRequest.teamName}', ${teamRequest.requesterId})">See The Player</button></td>`}</tr>`
 }
