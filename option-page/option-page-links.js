@@ -43,16 +43,19 @@ const userObj = JSON.parse(localStorage.getItem('user'));
         if (userObj.role === 'player') {
             let teamOfUser = await getTeamOfUser(JSON.parse(localStorage.getItem('user')).userId);
 
-            // Check if player (not captain)
-            if (userObj.userId != teamOfUser.captain) {
-                bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Applications</a>`;
-            } else {
-                bodyElement.innerHTML += `<a href="/team-request-approvedeny/team-request-approvedeny.html">Approve/Deny Team Requests</a>`;
-            }
-            
             // Check if part of a team
             if (teamOfUser) {
+
+                // Check if player (not captain)
+                if (userObj.userId != teamOfUser.captain) {
+                    bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Applications</a>`;
+                } else {
+                    bodyElement.innerHTML += `<a href="/team-request-approvedeny/team-request-approvedeny.html">Approve/Deny Team Requests</a>`;
+                }
+
                 bodyElement.innerHTML += `<a href="/team-viewer/team-viewer.html">View Your Team</a>`
+            } else {
+                bodyElement.innerHTML += `<a href="/team-application/team-application.html">Team Applications</a>`;
             }
         }
         

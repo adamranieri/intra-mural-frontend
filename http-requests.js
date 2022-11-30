@@ -148,11 +148,23 @@ async function retrieveAllGamesAndReferees(){
 async function refereeApplyToOfficiate(gameId, userId){
     const body = JSON.stringify({gameId,userId});
     const result = await fetch(`${server}/game-requests/apply`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});
-    return result.status === 204;
+    return result.status === 201;
 }
 
 async function refereeRemoveOfficiate(gameId, userId){
     const body = JSON.stringify({gameId, userId});
     const result = await fetch(`${server}/game-requests/delete`,{method:"DELETE", body, headers:{"Content-type":"application/json"}, credentials:"include"});
     return result.status === 204;
+}
+
+async function sendApproveTeamRequest(requestId){
+    const result = await fetch(`${server}/teamrequests/${requestId}/approve`,{method:"PATCH", headers:{"Content-type":"application/json"}, credentials:"include"});
+    const responseBody = await result.json();
+    return responseBody;
+}
+
+async function sendDenyTeamRequest(requestId){
+    const result = await fetch(`${server}/teamrequests/${requestId}/deny`,{method:"PATCH", headers:{"Content-type":"application/json"}, credentials:"include"});
+    const responseBody = await result.json();
+    return responseBody;
 }
