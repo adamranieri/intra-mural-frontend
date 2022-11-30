@@ -89,6 +89,12 @@ async function retrieveTeamByTeamName(teamName) {
     return team;
 }
 
+async function retrieveUsersByTeamName(teamName) {
+    const result = await fetch(`${server}/teams/${teamName}/users`, { credentials:"include" });
+    const players = await result.json();
+    return players;
+}
+
 async function retrieveAllSeasons(){
     const result = await fetch(`${server}/seasons`, { credentials:"include" });
     const seasons = await result.json();
@@ -115,6 +121,12 @@ async function retrieveStatsForPlayer(playerId = 0,sport =""){ // returns stats
 
 async function retrieveTeamRequestsForPlayer(playerId) {
     const result = await fetch(`${server}/teamrequests?userId=${playerId}`, { credentials:"include" })
+    const teamRequests = await result.json();
+    return teamRequests;
+}
+
+async function retrieveTeamRequestsForTeam(teamName) {
+    const result = await fetch(`${server}/teamrequests?team=${teamName}`, { credentials:"include" })
     const teamRequests = await result.json();
     return teamRequests;
 }

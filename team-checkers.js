@@ -27,7 +27,8 @@ async function getUnappliedTeamsOfPlayer(playerId) {
     return teams;
 }
 
-async function getTeamOfPlayer(playerId) {
+async function getTeamOfUser(playerId) {
+    // See if they're a regular player that is part of a team (accepted Team Request)
     let teamRequests = await retrieveTeamRequestsForPlayer(playerId);
     let teamRequestMap = {}
     for (teamRequest of teamRequests) {
@@ -37,6 +38,14 @@ async function getTeamOfPlayer(playerId) {
     for (key in teamRequestMap) {
         if (teamRequestMap[key].teamRequestStatus === 'accepted') {
             return await retrieveTeamByTeamName(key);
+        }
+    }
+
+    // Retrieve team of captain
+    let teams = await retrieveAllTeams()
+    for (team of teams) {
+        if (playerId === team.captain) {
+            return team;
         }
     }
 

@@ -30,7 +30,7 @@ function optionHTML(title,value){
     return `<option value="${value}">${title}</option>`
 }
 
-function teamTableRowHTML(team) {
+function teamApplicationTableRowHTML(team) {
     return (
     `<tr>
         <td>${team.name}</td>
@@ -45,13 +45,12 @@ async function showCaptainInfo(teamName, id) {
     let body = document.getElementsByTagName('body')[0];
 
     let stats = await retrieveStatsForPlayer(id);
-    console.log(stats);
 
-    removeCaptainInfo();
+    removePlayerOrCaptainInfo();
 
     let captainInfoSection = (
         `<section>
-            <button onclick="removeCaptainInfo()">Close</button>
+            <button onclick="removePlayerOrCaptainInfo()">Close</button>
             <h2>${teamName}'s Captain</h2>
             <p>Player Id: ${stats.id}</p>
             <p>Username: ${stats.username}</p>
@@ -61,6 +60,41 @@ async function showCaptainInfo(teamName, id) {
     );
 
     body.innerHTML += captainInfoSection;
+}
+
+function teamMemberTableRowHTML(team, member) {
+    return `<tr><td>${member.userId}</td><td>${member.username}</td><td>${team.captain === member.userId ? 'Captain' : 'Player'}</td><td><button onclick="${team.captain === member.userId ? `showCaptainInfo('${team.name}', ${member.userId})` : `showPlayerInfo('${team.name}', ${member.userId})`}">See The Player</button></td></tr>`
+}
+
+async function showPlayerInfo(teamName, id) {
+    let body = document.getElementsByTagName('body')[0];
+
+    let stats = await retrieveStatsForPlayer(id);
+
+    removePlayerOrCaptainInfo();
+
+    let playerInfoSection = (
+        `<section>
+            <button onclick="removePlayerOrCaptainInfo()">Close</button>
+            <h2>${teamName}'s Member</h2>
+            <p>Player Id: ${stats.id}</p>
+            <p>Username: ${stats.username}</p>
+            ${stats.hideBiometrics === false ? `<p>Height (inches): ${stats.heightInches}</p> <p>Weight (lbs): ${stats.weightLbs}</p>` : '<p><strong>Player has chosen not to show biometric information</strong></p>'}
+            ${stats.profilePic != 'none' ? `<img src="${stats.profilePic}" />` : '<p><strong>Player has no profile picture</strong></p>'}
+        </section>`
+    );
+
+    body.innerHTML += playerInfoSection;
+}
+
+function removePlayerOrCaptainInfo() {
+    if (document.getElementsByTagName('section').length > 0) {
+        let captainInfo = document.getElementsByTagName('section')[0];
+
+        if (captainInfo) {
+            captainInfo.parentNode.removeChild(captainInfo);
+        }
+    }
 }
 
 function teamApplyOptions(teams) {
@@ -80,20 +114,14 @@ function teamApplyOptions(teams) {
     return applyMenu;
 }
 
-function removeCaptainInfo() {
-    if (document.getElementsByTagName('section').length > 0) {
-        let captainInfo = document.getElementsByTagName('section')[0];
-
-        if (captainInfo) {
-            captainInfo.parentNode.removeChild(captainInfo);
-        }
-    }
-}
-
 function changePasswordInputType() {
     if (passwordInput.getAttribute("type") === "password") {
         passwordInput.setAttribute("type", "text");
     } else {
         passwordInput.setAttribute("type", "password");
     }
+}
+
+function teamRequestTableRowHTML(teamRequest) {
+    return `<tr><td>${teamRequest.teamRequestId}</td><td>${teamRequest.requesterId}</td><td>${teamRequest.teamRequestStatus}</td>${teamRequest.teamRequestStatus === 'pending' ? `<td><button onclick="approveTeamRequest(${teamRequest.teamRequestId})">Approve</button></td><td><button onclick="denyTeamRequest(${teamRequest.teamRequestId})">Deny</button></td>` : ''}</tr>`
 }

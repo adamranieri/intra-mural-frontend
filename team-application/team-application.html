@@ -45,7 +45,7 @@
                 team.applicationStatus = 'not applied';
             }
             
-            tbody.innerHTML += teamTableRowHTML(team);
+            tbody.innerHTML += teamApplicationTableRowHTML(team);
         }
     }
 
@@ -56,8 +56,8 @@
         let applicationMessage = document.createElement('div');
         let tableElement = document.getElementsByTagName('table')[0];
 
-        if ((await getTeamOfPlayer(JSON.parse(localStorage.getItem('user')).userId)).name) {
-            applicationMessage.innerHTML = `<p><strong>You cannot apply for another team since you are part of team "${(await getTeamOfPlayer(JSON.parse(localStorage.getItem('user')).userId)).name}"</strong></p>`;
+        if ((await getTeamOfUser(JSON.parse(localStorage.getItem('user')).userId))) {
+            applicationMessage.innerHTML = `<p><strong>You cannot apply for another team since you are part of team "${(await getTeamOfUser(JSON.parse(localStorage.getItem('user')).userId)).name}"</strong></p>`;
         }
         else if (await playerHasPendingTeamRequest(JSON.parse(localStorage.getItem('user')).userId)) {
             applicationMessage.innerHTML = '<p><strong>You cannot apply for another team if a request is pending</strong></p>'
