@@ -6,6 +6,7 @@ function gameTableRowHTML(game){
         <td>${gameDate.toLocaleTimeString()}</td>
         <td>${venueTitle}</td><td>${homeTeam}</td>
         <td>${awayTeam}</td><td>${outcome}</td>
+        ${game.refereeIds ? `<td><button onclick="showRefereesForGame(${JSON.stringify(game.refereeIds)})">Show Referees</button></td>`: ''}
     </tr>`
 }
 
@@ -93,6 +94,25 @@ async function showPlayerInfo(id) {
 
     body.innerHTML += playerInfoSection;
 }
+
+async function showRefereeInfo(id) {
+    let body = document.getElementsByTagName('body')[0];
+
+    let stats = await retrieveStatsForPlayer(id);
+
+    let playerInfoSection = (
+        `<section>
+            <button onclick="removePlayerOrCaptainInfo()">Close</button>
+            <p>Referee Id: ${stats.id}</p>
+            <p>Username: ${stats.username}</p>
+            ${stats.hideBiometrics === false ? `<p>Height (inches): ${stats.heightInches}</p> <p>Weight (lbs): ${stats.weightLbs}</p>` : '<p><strong>Referee has chosen not to show biometric information</strong></p>'}
+            ${stats.profilePic != 'none' ? `<img src="${stats.profilePic}" />` : '<p><strong>Referee has no profile picture</strong></p>'}
+        </section>`
+    );
+
+    body.innerHTML += playerInfoSection;
+}
+
 
 function removePlayerOrCaptainInfo() {
     if (document.getElementsByTagName('section').length > 0) {
