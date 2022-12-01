@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="officiate-games.css">
+    <title>Officiate Games</title>
+</head>
+<body>
+    <h1>Games You've Chosen to Officiate</h1>
+    <table>
+        <thead>
+            <tr><th>Date</th><th>Time EST</th><th>Venue</th><th>Home Team</th><th>Away Team</th><th>Outcome</th></tr>
+        </thead>
+        <tbody id="gameTableBody">
+
+        </tbody>
+    </table>
+
+    <a href="../option-page/option-page.html">Back</a>
+    
+</body>
+<script src="../http-requests.js"></script>
+<script src="../dynamic-html.js"></script>
+<script>
+    (async function() {
+        let games = await retrieveAllGames();
+        const gamesAndReferees = await retrieveAllGamesAndReferees();
+        console.log(games);
+        console.log(gamesAndReferees);
+
+        let refereeGameIds = new Set();
+        for (element of gamesAndReferees) {
+            if (element.userId === JSON.parse(localStorage.getItem('user')).userId) {
+                refereeGameIds.add(element.gameId);
+            }
+        }
+
+        games = games.filter(game => refereeGameIds.has(game.gameId))
+
+        const gameTableBody = document.getElementById("gameTableBody")
+
+        for(const game of games){
+            const tr = officiateGameTableRowHTML(game)
+            gameTableBody.insertAdjacentHTML("beforeend",tr);
+        }
+    })();
+
+    async function updateScores(gameId, homeTeam, awayTeam) {
+        console.log(gameId);
+
+        const homeTeamPlayers = await retrieveRosterForTeam(homeTeam);
+        console.log(homeTeamPlayers);
+
+        const awayTeamPlayers = await retrieveRosterForTeam(awayTeam);
+        console.log(awayTeamPlayers);
+    }
+</script>
+</html>
+

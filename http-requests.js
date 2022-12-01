@@ -108,7 +108,7 @@ async function retrieveAllGames(){
 }
 
 async function retrieveRosterForTeam(teamName){
-    const result = await fetch(`${server}/teams/${teamName}/players`, { credentials:"include" });
+    const result = await fetch(`${server}/teams/${teamName}/users`, { credentials:"include" });
     const players = await result.json();
     return players;
 }

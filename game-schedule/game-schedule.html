@@ -44,17 +44,23 @@
         for(const game of games){
             game.refereeIds = refereeMap[game.gameId];
             const tr = gameTableRowHTML(game)
-            gameTableBody.insertAdjacentHTML("afterend",tr);
+            gameTableBody.insertAdjacentHTML("beforeend",tr);
         }
     }
 
     populateTable();
 
-    function showRefereesForGame(referees) {
+    function removeRefereeInfo() {
         let refereeSections = document.querySelectorAll('section');
         for (section of refereeSections) {
             section.remove();
         }
+    }
+
+    function showRefereesForGame(referees) {
+        removeRefereeInfo();
+
+        document.getElementsByTagName('body')[0].innerHTML += `<section><button onclick="removeRefereeInfo()">Close</button></section>`;
 
         for (referee of referees) {
             showRefereeInfo(referee);
