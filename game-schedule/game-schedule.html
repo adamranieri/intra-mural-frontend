@@ -26,14 +26,40 @@
 <script>
     async function populateTable(){
         const games = await retrieveAllGames();
+        const gamesAndReferees = await retrieveAllGamesAndReferees();
+
         const gameTableBody = document.getElementById("gameTableBody")
+
+        let refereeMap = {};
+        for (gameAndReferee of gamesAndReferees) {
+            if (gameAndReferee.gameId in refereeMap && !refereeMap[gameAndReferee.gameId].includes(gameAndReferee.userId)) {
+                refereeMap[gameAndReferee.gameId].push(gameAndReferee.userId);
+            } else {
+                refereeMap[gameAndReferee.gameId] = [ gameAndReferee.userId ];
+            }
+        }
+
+        console.log(refereeMap);
         
         for(const game of games){
+            game.refereeIds = refereeMap[game.gameId];
             const tr = gameTableRowHTML(game)
             gameTableBody.insertAdjacentHTML("afterend",tr);
         }
     }
+
     populateTable();
+
+    function showRefereesForGame(referees) {
+        let refereeSections = document.querySelectorAll('section');
+        for (section of refereeSections) {
+            section.remove();
+        }
+
+        for (referee of referees) {
+            showRefereeInfo(referee);
+        }
+    }
 </script>
 </html>
 

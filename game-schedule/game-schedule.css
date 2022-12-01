@@ -17,3 +17,13 @@ a {
     text-decoration: none;
     padding: 20px;
 }
+
+section {
+    background-color: white;
+    text-align: center;
+    font-size: large;
+    color: black;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5rem;
+}
