@@ -61,6 +61,7 @@ const userObj = JSON.parse(localStorage.getItem('user'));
         
         if (userObj.role === 'referee') {
             bodyElement.innerHTML += `<a href="/officiating-choice/officiating-choice.html">Edit Officiating Choice</a>`
+            bodyElement.innerHTML += `<a href="/officiate-games/officiate-games.html">Officiate Games</a>`
         }
         
         // Logout button

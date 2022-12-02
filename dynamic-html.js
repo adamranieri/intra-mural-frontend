@@ -10,6 +10,18 @@ function gameTableRowHTML(game){
     </tr>`
 }
 
+function officiateGameTableRowHTML(game) {
+    const {gameStart,venueTitle,homeTeam,awayTeam,outcome} = game;
+    const gameDate = new Date(gameStart*1000);
+    return`<tr>
+        <td>${gameDate.toLocaleDateString()}</td>
+        <td>${gameDate.toLocaleTimeString()}</td>
+        <td>${venueTitle}</td><td>${homeTeam}</td>
+        <td>${awayTeam}</td><td>${outcome}</td>
+        <td><button onclick="renderPlayerLists(${game.gameId}, '${homeTeam}', '${awayTeam}')">Update Scores</button></td>
+    </tr>`
+}
+
 function venueTableRowHTML(venue) {
     const {title} = venue;
     return `<tr><td>${title}</td></tr>`
@@ -102,7 +114,6 @@ async function showRefereeInfo(id) {
 
     let playerInfoSection = (
         `<section>
-            <button onclick="removePlayerOrCaptainInfo()">Close</button>
             <p>Referee Id: ${stats.id}</p>
             <p>Username: ${stats.username}</p>
             ${stats.hideBiometrics === false ? `<p>Height (inches): ${stats.heightInches}</p> <p>Weight (lbs): ${stats.weightLbs}</p>` : '<p><strong>Referee has chosen not to show biometric information</strong></p>'}

@@ -30,7 +30,7 @@
         
         for(const venue of venues){
             const tr = venueTableRowHTML(venue)
-            venueTableBody.insertAdjacentHTML("afterend",tr);
+            venueTableBody.insertAdjacentHTML("beforeend",tr);
         }
     }
 
