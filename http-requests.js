@@ -158,11 +158,17 @@ async function refereeRemoveOfficiate(gameId, userId){
 }
 
 async function sendApproveTeamRequest(requestId){
-    const result = await fetch(`${server}/teamrequests/${requestId}/approve`,{method:"PATCH", headers:{"Content-type":"application/json"}, credentials:"include"});
+    const result = await fetch(`${server}/teamrequests/${requestId}/approve`,{method:"PATCH", credentials:"include"});
     return result.status === 200;
 }
 
 async function sendDenyTeamRequest(requestId){
-    const result = await fetch(`${server}/teamrequests/${requestId}/deny`,{method:"PATCH", headers:{"Content-type":"application/json"}, credentials:"include"});
+    const result = await fetch(`${server}/teamrequests/${requestId}/deny`,{method:"PATCH", credentials:"include"});
+    return result.status === 200;
+}
+
+async function sendAddOrUpdateBasketballStat(gameId, userId, teamName, points, fouls) {
+    const body = JSON.stringify({ gameId, userId, teamName, points, fouls });
+    const result = await fetch(`${server}/statbasketball`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});
     return result.status === 200;
 }

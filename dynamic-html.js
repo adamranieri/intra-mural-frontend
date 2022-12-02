@@ -18,7 +18,7 @@ function officiateGameTableRowHTML(game) {
         <td>${gameDate.toLocaleTimeString()}</td>
         <td>${venueTitle}</td><td>${homeTeam}</td>
         <td>${awayTeam}</td><td>${outcome}</td>
-        <td><button onclick="updateScores(${game.gameId}, '${homeTeam}', '${awayTeam}')">Update Scores</button></td>
+        <td><button onclick="renderPlayerLists(${game.gameId}, '${homeTeam}', '${awayTeam}')">Update Scores</button></td>
     </tr>`
 }
 
