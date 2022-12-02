@@ -8,8 +8,8 @@ function gameTableRowHTML(game){
         <td>${venueTitle}</td><td>${homeTeam}</td>
         <td>${awayTeam}</td><td>${outcome}</td>
         <td>${game.homeTeamScore}</td>
-        <td>${game.awayTeamScore}</td>
         <td>${game.homeTeamFouls}</td>
+        <td>${game.awayTeamScore}</td>
         <td>${game.awayTeamFouls}</td>
         ${game.refereeIds ? `<td><button onclick="showRefereesForGame(${JSON.stringify(game.refereeIds)})">Show Referees</button></td>`: ''}
     </tr>`
