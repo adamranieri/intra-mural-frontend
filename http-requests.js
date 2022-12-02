@@ -172,3 +172,9 @@ async function sendAddOrUpdateBasketballStat(gameId, userId, teamName, points, f
     const result = await fetch(`${server}/statbasketball`,{method:"POST", body, headers:{"Content-type":"application/json"}, credentials:"include"});
     return result.status === 200;
 }
+
+async function retrieveBasketballStatsByGameId(gameId) {
+    const result = await fetch(`${server}/games/${gameId}/statbasketball`, { credentials: 'include' });
+    const stats = await result.json();
+    return stats;
+}

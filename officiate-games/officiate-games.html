@@ -93,6 +93,40 @@
         }
 
         document.addEventListener("click", buttonActions);
+
+        populateExistingScores(gameId);
+    }
+
+    async function populateExistingScores(gameId) {
+        let existingStats = await retrieveBasketballStatsByGameId(gameId);
+
+        let homePointInputs = document.querySelectorAll("#homeTeam input[id$='-points']");
+        let homeFoulInputs = document.querySelectorAll("#homeTeam input[id$='-fouls']");
+        
+        for (let i = 0; i < homePointInputs.length; i++) {
+            let data = JSON.parse(homePointInputs[i].dataset.player);
+            
+            for (const stat of existingStats) {
+                if (stat.userId === data.userId) {
+                    homePointInputs[i].value = stat.points;
+                    homeFoulInputs[i].value = stat.fouls;
+                }
+            }
+        }
+
+        let awayPointInputs = document.querySelectorAll("#awayTeam input[id$='-points']");
+        let awayFoulInputs = document.querySelectorAll("#awayTeam input[id$='-fouls']");
+
+        for (let i = 0; i < awayPointInputs.length; i++) {
+            let data = JSON.parse(awayPointInputs[i].dataset.player);
+            
+            for (const stat of existingStats) {
+                if (stat.userId === data.userId) {
+                    awayPointInputs[i].value = stat.points;
+                    awayFoulInputs[i].value = stat.fouls;
+                }
+            }
+        }
     }
 
     function buttonActions() {
